@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<!-- 日期选择控件 start-->
+ <script src="http://a.tbcdn.cn/??s/kissy/1.2.0/kissy-min.js,p/global/1.0/global-min.js,p/et/et.js?t=2012011120110301.js" type="text/javascript"></script>
+
+<script>
+KISSY.add({
+   'calendar':{
+       fullpath:'http://a.tbcdn.cn/s/kissy/1.2.0/calendar-min.js?t=20120225231543',
+       cssfullpath:'http://a.tbcdn.cn/s/kissy/1.1.6/calendar/default-min.css'
+   }   
+});
+KISSY.use('calendar', function(S, Calendar){
+var S=KISSY,D=S.DOM,E=S.Event,UA=S.UA;
+new S.Calendar(D.get('#J_Time'), {
+		popup:true,
+		triggerType:['click'],
+		closable:true,
+		pages:1,
+		multiSelect:true												
+		}).on('select', function(e) {
+			var tar = e.currentTarget;
+			var data = S.Date.format(e.date, 'yyyymmdd');
+			//
+			function getDateWidthZero(date){
+				var list = date.split('');
+				var list2 = [];
+				for(var i=0; i<list.length; i++){
+					if(!((i==4||i==6)&&list[i]==0)){
+						list2.push(list[i]);
+					}
+				}
+				return list2.join('');
+			}
+			D.val(D.get('#J_Time'),getDateWidthZero(data));
+		}); 
+});
+
+KISSY.use('calendar', function(S, Calendar){
+var S=KISSY,D=S.DOM,E=S.Event,UA=S.UA;
+new S.Calendar(D.get('#J_Rrange'), {
+		popup:true,
+		triggerType:['click'],
+		closable:false,
+		pages:2,
+		rangeSelect:true,
+		multiSelect:false												
+		}).on('rangeSelect', function(e) {
+			var tar = e.currentTarget;
+			var starData = S.Date.format(e.start, 'yyyy-mm-dd');
+			var endData =S.Date.format(e.end,'yyyy-mm-dd');
+			D.val(D.get('#J_Rrange'),starData+"至"+endData);
+		}); 
+});
+</script>
+<!-- 日期选择控件 end-->
+</head>
+
+<body>
+单个时间选择：
+<input type="text" id="J_Time" name="date"  readonly="readonly" style="height:16px;width:200px;text-align:center;width:80px;" />
+</br></br></br>
+时间区间选择：
+<input type="text" id="J_Rrange" name="date"  readonly="readonly" style="height:16px;width:200px;text-align:center;width:140px;" />
+
+</body>
+</html>
